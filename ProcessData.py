@@ -1,23 +1,43 @@
 #ProcessData.py
-#Name:
-#Date:
-#Assignment:
+#Name:Cooper Kinnan
+#Date:4/6/2025
+#Assignment:Lab 8
 
-import random
 
 def main():
+    # Open the files we will be using
+    inFile = open("names.dat", 'r')
+    outFile = open("StudentList.csv", 'w')
+    
+    
+    outFile.write("Last Name,First Name,UserID,Major-Year\n")
+    
+    
+    for line in inFile:
+        data = line.strip().split()  
+        first_name = data[0]
+        last_name = data[1]
+        student_id = data[3][-3:]  
+        major = data[6][:3].upper()  
+        year_mapping = {"Freshman": "FR", "Sophomore": "SO", "Junior": "JR", "Senior": "SR"}
+        year_abbr = year_mapping.get(data[5], "Unknown")  
 
-  #Open the files we will be using
-  inFile = open("names.dat", 'r')
-  outFile = open("StudentList.csv", 'w')
+     
+        if len(last_name) < 5:
+            user_id = f"{first_name[0]}{last_name}X{student_id}"
+        else:
+            user_id = f"{first_name[0]}{last_name}{student_id}"
 
-  #Process each line of the input file and output to the CSV file
+        
+        major_year = f"{major}-{year_abbr}"
 
-
-
-  #Close files in the end to save and ensure they are not damaged.
-  inFile.close()
-  outFile.close()
+       
+        outFile.write(f"{last_name},{first_name},{user_id},{major_year}\n")
+    
+    
+    inFile.close()
+    outFile.close()
 
 if __name__ == '__main__':
-  main()
+    main()
+
